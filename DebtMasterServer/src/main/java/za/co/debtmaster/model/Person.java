@@ -6,12 +6,11 @@ public class Person {
     private Budget budget;
     private Debt debt;
 
-    public Person(String name, String surname, String email, Budget budget, Debt debt) {
+    public Person(String name, String surname, String email, Budget budget) {
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.budget = budget;
-        this.debt = debt;
     }
 
 
@@ -35,12 +34,11 @@ public class Person {
         return debt;
     }
 
-    public void update(String name, String surname, String email, Budget budget, Debt debt) {
+    public void update(String name, String surname, String email, Budget budget) {
 
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.budget = budget;
-        this.debt = debt;
     }
 }
