@@ -12,12 +12,20 @@ public class Calculator {
     private int duration;
     private String debtType;
 
-    public Calculator(double debtAmount, double deposit, double interestRate, double balloonPayment, int duration, String debtType) {
+    public Calculator(double debtAmount, double deposit, double interestRate, double balloonPayment, int durationYears, String debtType) {
         this.debtAmount = debtAmount;
         this.deposit = deposit;
         this.interestRate = interestRate;
         this.balloonPayment = balloonPayment;
         this.duration = duration;
         this.debtType = debtType;
+    }
+
+    public double calculateVehicle() {
+        return 0.00;
+    }
+
+    public double homeLoan() {
+        return 0.00;
     }
 }
