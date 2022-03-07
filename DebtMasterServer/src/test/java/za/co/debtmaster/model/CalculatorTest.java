@@ -36,4 +36,10 @@ class CalculatorTest {
         assertEquals(5478.00, calculator.homeLoan());
     }
 
+    @Test
+    void testTotalPayments() {
+        Calculator calculator = new Calculator(700000.00, 20000, 7.00, 0.0, 20, "Home");
+        assertEquals(180000.00, calculator.totalPayments(2500.00, 72));
+    }
+
 }

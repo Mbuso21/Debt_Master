@@ -22,10 +22,21 @@ public class Calculator {
     }
 
     public double calculateVehicle() {
+        if(deposit != 0){
+            this.debtAmount = debtAmount - debtAmount;
+        }
+        int months = this.duration *12;
+
+
         return 0.00;
     }
 
     public double homeLoan() {
         return 0.00;
+    }
+
+    public double totalPayments(double monthlyPayment, int months) {
+
+        return monthlyPayment * months;
     }
 }
