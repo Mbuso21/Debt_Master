@@ -6,17 +6,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BudgetTest {
 
-    public Budget budget = new Budget("{\"income\":\"15000.00\"," +
+    public String budgeJSONString = "{\"income\":\"15000.00\"," +
             "\"expenses\":" +
-            "{\"rent\":\"3000.00\", " +
-            "\"groceries\":\"2000.00\", " +
+            "{\"rent\":\"3000.00\"," +
+            "\"groceries\":\"2000.00\"," +
             "\"transport\":\"2000.00\"" +
-            "}" +
-            "}");
+            "}}";
+    public Budget budget = new Budget(budgeJSONString);
 
     @Test
     void testGetGrossIncome() {
-        System.out.println(budget.getBudgetJSONString());
         assertEquals(15000.00, budget.getGrossIncome());
     }
 
@@ -27,7 +26,7 @@ class BudgetTest {
 
     @Test
     void testIncomeAndExpenseTotals() {
-        assertEquals(5000.00, budget.getNetIncome());
+        assertEquals(8000.00, budget.getNetIncome());
     }
 
 }

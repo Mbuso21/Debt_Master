@@ -9,7 +9,6 @@ class PersonTest {
     @Test
     void testPerson() {
         Budget budget = new Budget();
-        Debt debt = new Debt();
         Person person = new Person("Mbuso", "Mehlomakulu", "mbuso@test.com", budget);
         assertEquals("Mbuso", person.getName());
         assertEquals("Mehlomakulu", person.getSurname());
@@ -19,7 +18,6 @@ class PersonTest {
     @Test
     void testUpdate() {
         Budget budget = new Budget();
-        Debt debt = new Debt();
         Person person = new Person("Mbuso", "Mehlomakulu", "mbuso@test.com", budget);
         assertEquals("Mbuso", person.getName());
         assertEquals("Mehlomakulu", person.getSurname());

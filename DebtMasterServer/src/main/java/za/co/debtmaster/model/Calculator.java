@@ -9,7 +9,7 @@ package za.co.debtmaster.model;
 public class Calculator {
 
     private double debtAmount, deposit, interestRate, balloonPayment;
-    private int duration;
+    private int durationYears;
     private String debtType;
 
     public Calculator(double debtAmount, double deposit, double interestRate, double balloonPayment, int durationYears, String debtType) {
@@ -17,7 +17,7 @@ public class Calculator {
         this.deposit = deposit;
         this.interestRate = interestRate;
         this.balloonPayment = balloonPayment;
-        this.duration = duration;
+        this.durationYears = durationYears;
         this.debtType = debtType;
     }
 
@@ -25,7 +25,7 @@ public class Calculator {
         if(deposit != 0){
             this.debtAmount = debtAmount - debtAmount;
         }
-        int months = this.duration *12;
+        int monthsDuration = this.durationYears * 12;
 
 
         return 0.00;

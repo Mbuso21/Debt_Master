@@ -1,8 +1,7 @@
 package za.co.debtmaster.model;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.core.*;
+import com.fasterxml.jackson.databind.*;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -11,16 +10,20 @@ import java.util.Map;
 public class Budget {
 
     private double totalIncome, totalExpenses;
-    private String budgetJSONString;
+    public String budgetJSONString;
 
 
     public Budget(String budgetJSONString) {
-        this.totalIncome = getNetIncome();
-        this.totalExpenses = getTotalExpenses();
         this.budgetJSONString = budgetJSONString;
+        this.totalIncome = getGrossIncome();
+        this.totalExpenses = getTotalExpenses();
+
     }
 
     public Budget() {
+        this.totalIncome = 0.00;
+        this.totalExpenses = 0.00;
+        this.budgetJSONString = "No Budget";
 
     }
 
@@ -29,21 +32,23 @@ public class Budget {
     }
 
     public double getGrossIncome() {
-        System.out.println(budgetJSONString);
         Map<String, String> requestMap = convertJSONStringToMap(budgetJSONString);
         return Double.parseDouble(requestMap.get("income").toString());
     }
 
     public double getTotalExpenses() {
         Map<String, String> requestMap = convertJSONStringToMap(this.budgetJSONString);
-        System.out.println(requestMap);
-        Map<String, String> expenseMap = convertJSONStringToMap(requestMap.get("expenses"));
-        double totalExpenses = 0.00;
+        // {"income":"15000.00","expenses":{".............."}}
+        // requestMap.get("expenses") is taken as a LinkedHashMap object
+        Object expenseJSON = requestMap.get("expenses");
+
+        Map<String, String> expenseMap = (Map<String, String>) expenseJSON;
+        double totalExpensesIn = 0.00;
         for(Map.Entry<String, String> expense : expenseMap.entrySet()) {
-            totalExpenses += Double.parseDouble(expense.getValue());
+            totalExpensesIn += Double.parseDouble(expense.getValue());
         }
 
-        return totalExpenses;
+        return totalExpensesIn;
     }
 
     /**
@@ -62,16 +67,14 @@ public class Budget {
      */
     public Map<String, String> convertJSONStringToMap(String budgetJSONString) {
         ObjectMapper mapper = new ObjectMapper();
-        Map<String, String> requestMap = null;
+        Map<String, String> requestMap = new HashMap<>();
         try {
             requestMap = mapper.readValue(budgetJSONString, Map.class);
-            System.out.println(requestMap);
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("Can't convert to map");
 
         }
-
         return requestMap;
     }
 
