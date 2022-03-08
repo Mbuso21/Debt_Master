@@ -24,6 +24,10 @@ public class Budget {
 
     }
 
+    public String getBudgetJSONString() {
+        return this.budgetJSONString;
+    }
+
     public double getGrossIncome() {
         System.out.println(budgetJSONString);
         Map<String, String> requestMap = convertJSONStringToMap(budgetJSONString);
@@ -31,7 +35,7 @@ public class Budget {
     }
 
     public double getTotalExpenses() {
-        Map<String, String> requestMap = convertJSONStringToMap(budgetJSONString);
+        Map<String, String> requestMap = convertJSONStringToMap(this.budgetJSONString);
         System.out.println(requestMap);
         Map<String, String> expenseMap = convertJSONStringToMap(requestMap.get("expenses"));
         double totalExpenses = 0.00;

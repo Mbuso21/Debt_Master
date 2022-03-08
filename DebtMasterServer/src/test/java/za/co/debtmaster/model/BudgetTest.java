@@ -16,6 +16,7 @@ class BudgetTest {
 
     @Test
     void testGetGrossIncome() {
+        System.out.println(budget.getBudgetJSONString());
         assertEquals(15000.00, budget.getGrossIncome());
     }
 
