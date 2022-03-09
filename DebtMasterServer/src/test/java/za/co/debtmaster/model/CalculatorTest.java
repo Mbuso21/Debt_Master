@@ -51,7 +51,7 @@ class CalculatorTest {
                 0.0,
                 240,
                 "Home");
-        assertEquals(5639.00, calculator.homeLoan());
+        assertEquals(5779.85, calculator.homeLoan());
     }
 
     @Test
@@ -63,7 +63,7 @@ class CalculatorTest {
                 0.0,
                 240,
                 "Home");
-        assertEquals(5478.00, calculator.homeLoan());
+        assertEquals(5614.71, calculator.homeLoan());
     }
 
     @Test
@@ -74,7 +74,7 @@ class CalculatorTest {
                                             0.0,
                                             240,
                                                 "home");
-        assertEquals(180000.00, calculator.totalPayments());
+        assertEquals(1347530.4, calculator.totalPayments());
     }
 
     @Test
