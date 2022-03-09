@@ -2,13 +2,13 @@ package za.co.debtmaster.model;
 
 public class Person {
 
-    private String name, surname, email;
+    private String name;
+    private String email;
     private Budget budget;
-    private Debt debt;
+
 
     public Person(String name, String email, Budget budget) {
         this.name = name;
-        this.surname = surname;
         this.email = email;
         this.budget = budget;
     }
@@ -16,10 +16,6 @@ public class Person {
 
     public String getName() {
         return name;
-    }
-
-    public String getSurname() {
-        return surname;
     }
 
     public String getEmail() {
@@ -30,15 +26,19 @@ public class Person {
         return budget;
     }
 
-    public Debt getDebt() {
-        return debt;
-    }
-
     public void update(String name, String surname, String email, Budget budget) {
 
         this.name = name;
-        this.surname = surname;
         this.email = email;
         this.budget = budget;
+    }
+
+
+    @Override
+    public String toString() {
+        return "{\"name\":\"" + name + "\"," +
+                "\"email\":\"" + email + "\"," +
+                "\"budget\":\"" + budget.toString() + "\"" +
+                "}";
     }
 }

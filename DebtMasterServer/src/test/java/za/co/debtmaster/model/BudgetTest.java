@@ -28,4 +28,14 @@ class BudgetTest {
         assertEquals(8000.00, budget.getNetIncome());
     }
 
+    @Test
+    void testToString() {
+        assertEquals("{\"income\":\"15000.00\"," +
+                "\"expenses\":" +
+                "{\"rent\":\"3000.00\"," +
+                "\"groceries\":\"2000.00\"," +
+                "\"transport\":\"2000.00\"" +
+                "}}", budget.toString());
+    }
+
 }
