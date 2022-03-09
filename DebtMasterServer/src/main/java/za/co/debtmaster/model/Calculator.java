@@ -23,8 +23,12 @@ public class Calculator {
 
     public double calculateVehicle() {
         if(deposit != 0){
-            this.debtAmount = debtAmount - debtAmount;
+            debtAmount = debtAmount - deposit;
         }
+
+        this.debtAmount = debtAmount + (1207.50 + 4140.00);
+
+        System.out.println(debtAmount);
 
 
         return 0.00;
