@@ -483,4 +483,4 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-.attach_pid*
+#.attach_pid*
