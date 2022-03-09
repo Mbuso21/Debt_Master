@@ -8,38 +8,43 @@ package za.co.debtmaster.model;
  */
 public class Calculator {
 
-    private double debtAmount, deposit, interestRate, balloonPayment;
-    private int durationYears;
+    private double principalAmount, deposit, interestRate, balloonPayment;
+    private int durationMonths;
     private String debtType;
 
-    public Calculator(double debtAmount, double deposit, double interestRate, double balloonPayment, int durationMonths, String debtType) {
-        this.debtAmount = debtAmount;
+    public Calculator(double principalAmount, double deposit, double interestRate, double balloonPayment, int durationMonths, String debtType) {
+        this.principalAmount = principalAmount;
         this.deposit = deposit;
-        this.interestRate = interestRate;
+        this.interestRate = interestRate/100;
         this.balloonPayment = balloonPayment;
-        this.durationYears = durationMonths;
+        this.durationMonths = durationMonths;
         this.debtType = debtType;
     }
 
-    public double calculateVehicle() {
+    public double calculateVehicleAndLoan() {
         if(deposit != 0){
-            debtAmount = debtAmount - deposit;
+            principalAmount = principalAmount - deposit;
         }
+        // Adding Initiation fee and Monthly Admin fee.
+        principalAmount = principalAmount + 1207.50;
 
-        this.debtAmount = debtAmount + (1207.50 + 4140.00);
+        System.out.println(principalAmount);
 
-        System.out.println(debtAmount);
+        double numerator = principalAmount * (interestRate/12);
+        double denominator = 1.00 - Math.pow(1.00 + interestRate/12, -durationMonths);
 
-
-        return 0.00;
+        double monthlyPayment = numerator/denominator;
+        return (double) Math.round(monthlyPayment * 100)/100 + 69.00;
     }
 
     public double homeLoan() {
         return 0.00;
     }
 
-    public double totalPayments(double monthlyPayment, int months) {
-
-        return monthlyPayment * months;
+    public double totalPayments() {
+        if(debtType == "vehicle" || debtType == "personal"){
+            return calculateVehicleAndLoan() * durationMonths;
+        }
+        return 0.00;
     }
 }

@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class CalculatorTest {
 
     @Test
-    void testVehicleFinanceNoDepositNoBalloon() {
+    void testVehicleFinanceNoDeposit() {
         Calculator calculator = new Calculator(
                 200000.00,
                 0.0,
@@ -15,23 +15,11 @@ class CalculatorTest {
                 0.0,
                 60,
                 "Vehicle");
-        assertEquals(4053.15, calculator.calculateVehicle());
+        assertEquals(4053.15, calculator.calculateVehicleAndLoan());
     }
 
     @Test
-    void testVehicleFinanceBalloonNoDeposit() {
-        Calculator calculator = new Calculator(
-                200000.00,
-                0.00,
-                7.00,
-                70000,
-                60,
-                "Vehicle");
-        assertEquals(3075.40, calculator.calculateVehicle());
-    }
-
-    @Test
-    void testVehicleFinanceWithDepositNoBalloon() {
+    void testVehicleFinanceWithDeposit() {
         Calculator calculator = new Calculator(
                 200000.00,
                 20000,
@@ -39,7 +27,19 @@ class CalculatorTest {
                 0.00,
                 60,
                 "Vehicle");
-        assertEquals(3657.13, calculator.calculateVehicle());
+        assertEquals(3657.13, calculator.calculateVehicleAndLoan());
+    }
+
+    @Test
+    void testPersonalLoanNoDeposit() {
+        Calculator calculator = new Calculator(
+                30000.00,
+                0.0,
+                17.00,
+                0.0,
+                24,
+                "personal");
+        assertEquals(1611.97, calculator.calculateVehicleAndLoan());
     }
 
     @Test
@@ -67,14 +67,25 @@ class CalculatorTest {
     }
 
     @Test
-    void testTotalPayments() {
+    void testTotalPaymentsHome() {
         Calculator calculator = new Calculator(700000.00,
                                                     20000,
                                                 7.00,
                                             0.0,
                                             240,
-                                                "Home");
-        assertEquals(180000.00, calculator.totalPayments(2500.00, 72));
+                                                "home");
+        assertEquals(180000.00, calculator.totalPayments());
+    }
+
+    @Test
+    void testTotalPaymentsVehicle() {
+        Calculator calculator = new Calculator(200000.00,
+                0.00,
+                7.00,
+                0.0,
+                60,
+                "vehicle");
+        assertEquals(243189.00, calculator.totalPayments());
     }
 
 }
