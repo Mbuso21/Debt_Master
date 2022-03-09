@@ -8,37 +8,72 @@ class CalculatorTest {
 
     @Test
     void testVehicleFinanceNoDepositNoBalloon() {
-        Calculator calculator = new Calculator(120000.00, 0.0, 7.00, 0.0, 5, "Vehicle");
-        assertEquals(2329.78, calculator.calculateVehicle());
+        Calculator calculator = new Calculator(
+                200000.00,
+                0.0,
+                7.00,
+                0.0,
+                60,
+                "Vehicle");
+        assertEquals(4053.15, calculator.calculateVehicle());
     }
 
     @Test
     void testVehicleFinanceBalloonNoDeposit() {
-        Calculator calculator = new Calculator(120000.00, 0.0, 7.00, 10800.00, 5, "Vehicle");
-        assertEquals(2329.78, calculator.calculateVehicle());
+        Calculator calculator = new Calculator(
+                200000.00,
+                0.00,
+                7.00,
+                70000,
+                60,
+                "Vehicle");
+        assertEquals(3075.40, calculator.calculateVehicle());
     }
 
     @Test
-    void testVehicleFinanceDepositNoBalloon() {
-        Calculator calculator = new Calculator(120000.00, 20000.00, 7.00, 0.0, 5, "Vehicle");
-        assertEquals(1794.49, calculator.calculateVehicle());
+    void testVehicleFinanceWithDepositNoBalloon() {
+        Calculator calculator = new Calculator(
+                200000.00,
+                20000,
+                7.00,
+                0.00,
+                60,
+                "Vehicle");
+        assertEquals(3657.13, calculator.calculateVehicle());
     }
 
     @Test
     void testHomeLoanNoDeposit() {
-        Calculator calculator = new Calculator(700000.00, 0.0, 7.00, 0.0, 20, "Home");
+        Calculator calculator = new Calculator(
+                700000.00,
+                0.00,
+                7.00,
+                0.0,
+                240,
+                "Home");
         assertEquals(5639.00, calculator.homeLoan());
     }
 
     @Test
     void testHomeLoanWithDeposit() {
-        Calculator calculator = new Calculator(700000.00, 20000, 7.00, 0.0, 20, "Home");
+        Calculator calculator = new Calculator(
+                700000.00,
+                20000,
+                7.00,
+                0.0,
+                240,
+                "Home");
         assertEquals(5478.00, calculator.homeLoan());
     }
 
     @Test
     void testTotalPayments() {
-        Calculator calculator = new Calculator(700000.00, 20000, 7.00, 0.0, 20, "Home");
+        Calculator calculator = new Calculator(700000.00,
+                                                    20000,
+                                                7.00,
+                                            0.0,
+                                            240,
+                                                "Home");
         assertEquals(180000.00, calculator.totalPayments(2500.00, 72));
     }
 

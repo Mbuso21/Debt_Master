@@ -6,7 +6,7 @@ public class Person {
     private Budget budget;
     private Debt debt;
 
-    public Person(String name, String surname, String email, Budget budget) {
+    public Person(String name, String email, Budget budget) {
         this.name = name;
         this.surname = surname;
         this.email = email;

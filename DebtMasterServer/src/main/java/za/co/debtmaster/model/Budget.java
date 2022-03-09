@@ -27,10 +27,6 @@ public class Budget {
 
     }
 
-    public String getBudgetJSONString() {
-        return this.budgetJSONString;
-    }
-
     public double getGrossIncome() {
         Map<String, String> requestMap = convertJSONStringToMap(budgetJSONString);
         return Double.parseDouble(requestMap.get("income").toString());
@@ -47,7 +43,6 @@ public class Budget {
         for(Map.Entry<String, String> expense : expenseMap.entrySet()) {
             totalExpensesIn += Double.parseDouble(expense.getValue());
         }
-
         return totalExpensesIn;
     }
 

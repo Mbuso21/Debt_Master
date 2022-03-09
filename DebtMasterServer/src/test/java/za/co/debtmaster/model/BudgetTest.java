@@ -6,13 +6,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BudgetTest {
 
-    public String budgeJSONString = "{\"income\":\"15000.00\"," +
+    public Budget budget = new Budget("{\"income\":\"15000.00\"," +
             "\"expenses\":" +
             "{\"rent\":\"3000.00\"," +
             "\"groceries\":\"2000.00\"," +
             "\"transport\":\"2000.00\"" +
-            "}}";
-    public Budget budget = new Budget(budgeJSONString);
+            "}}");
 
     @Test
     void testGetGrossIncome() {
