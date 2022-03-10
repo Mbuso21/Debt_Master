@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{/layout.html}">
+<head></head>
+<body>
+<div layout:fragment="contents">
+    <h2>My expenses</h2>
+    <p><a href="/newexpense" th:id="add_expense">Add a new expense</a></p>
+
+    <p th:if="${expenses.empty}" th:id="no_expenses"> You don't have any expenses! </p>
+
+    <table th:unless="${expenses.empty}" th:id="expenses">
+
+        <tr>
+            <th>When</th>
+            <th>What</th>
+            <th></th>
+            <th>How Much</th>
+        </tr>
+        <tr th:each="expense , i : ${expenses}">
+            <td th:id="date_ + ${i.index+1}" th:text="${expense.date}"></td>
+            <td><a th:id="claim_expense_ + ${i.index+1}" th:href="@{'/claimexpense?expenseId=' + ${expense.getId()}}" th:text="${expense.description}" ></a> </td>
+            <td></td>
+            <td th:id="amount_ + ${i.index+1}" th:text="${#numbers.formatDecimal(expense.getNettAmount(), 0, 2, 'POINT')}"></td>
+        <tr>
+            <th ></th>
+            <th ></th>
+            <th ></th>
+            <th colspan="1" th:id="expenses_total" th:text="${#numbers.formatDecimal(expenses_total, 0, 2, 'POINT')}" class="total"></th>
+        </tr>
+    </table>
+
+    <h2>People that owe me</h2>
+    <p th:if="${claims_by.empty}" th:id="nobody_owes">Nobody owes you any money!</p>
+    <table th:unless="${claims_by.empty}" th:id="they_owe_me">
+        <tr>
+            <th> Who </th>
+            <th> What </th>
+            <th> Due </th>
+            <th> How much </th>
+        </tr>
+        <tr th:each="claim_by : ${claims_by}">
+            <td th:text="${claim_by.claimedFrom.getName()}"></td>
+            <td th:text="${claim_by.description}"></td>
+            <td th:text="${claim_by.dueDate}"></td>
+            <td th:text="${#numbers.formatDecimal(claim_by.amount, 0, 2, 'POINT')}" ></td>
+        </tr>
+        <tr>
+            <th ></th>
+            <th ></th>
+            <th ></th>
+            <th colspan="1" th:id="they_owe_me_total" th:text="${#numbers.formatDecimal(claims_by_total, 0, 2, 'POINT')}" class="total"></th>
+        </tr>
+    </table>
+
+    <h2>People I owe</h2>
+    <p th:if="${claims_from.empty}" th:id="owe_nobody">You don't owe anyone!</p>
+    <table th:unless="${claims_from.empty}" th:id="i_owe_them">
+        <tr>
+            <th> Who </th>
+            <th> What </th>
+            <th> Due </th>
+            <th > How much </th>
+        </tr>
+        <tr th:each="claim_from , i : ${claims_from}">
+            <td th:text="${claim_from.claimedBy.getName()}"></td>
+            <td><a th:id="settle_ + ${i.index+1}" th:href="@{'/settleclaim?claimId=' + ${claim_from.getId()}}" th:text="${claim_from.description}"></a></td>
+            <td th:text="${claim_from.dueDate}"></td>
+            <td th:text="${#numbers.formatDecimal(claim_from.amount, 0, 2, 'POINT')}" ></td>
+        </tr>
+        <tr>
+            <th ></th>
+            <th ></th>
+            <th ></th>
+            <th colspan="1" th:id="i_owe_them_total" th:text="${#numbers.formatDecimal(claims_from_total, 0, 2, 'POINT')}" class="total"></th>
+        </tr>
+    </table>
+
+    <section >
+        <table>
+            <tr>
+                <th ></th>
+                <th ></th>
+                <th ></th>
+                <th th:id="nett_expenses" th:text="${#numbers.formatDecimal(nettExpense, 0, 2, 'POINT')}" class="nettExpenses"></th>
+            </tr>
+        </table>
+    </section>
+
+</div>
+</body>
+
+</html>
