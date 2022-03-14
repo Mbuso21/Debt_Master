@@ -27,7 +27,7 @@ public class Calculator {
     /**
      * Calculates the monthly payment that a Vehicle or Personal loan will cost
      * this includes
-     * @return
+     * @return the monthly repayment
      */
     public double calculateVehicleAndLoan() {
 
