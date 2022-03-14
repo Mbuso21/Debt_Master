@@ -9,6 +9,7 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 import za.co.debtmaster.app.DefaultAccessManager;
 import za.co.debtmaster.app.Sessions;
+import za.co.debtmaster.controllers.CalculatorController;
 import za.co.debtmaster.controllers.HomePageController;
 import za.co.debtmaster.controllers.LoginController;
 import za.co.debtmaster.controllers.RegisterController;
@@ -63,7 +64,12 @@ public class DebtServer {
             loginAndLogoutRoutes();
             homePageRoute();
             registerRoute();
+            calculateDebt();
         });
+    }
+
+    private static void calculateDebt() {
+        post(CalculatorController.PATH, CalculatorController::handleCalculations);
     }
 
     private static void registerRoute() {
