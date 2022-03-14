@@ -47,15 +47,15 @@ public class DataBaseHander {
 //        deleteAll();
 //        getAllData();
         try {
-//            dataBaseHander.addPerson(personJsonString);
-//            dataBaseHander.addPerson(personJsonString2);
+            dataBaseHander.addPerson(personJsonString);
+            dataBaseHander.addPerson(personJsonString2);
         }catch (Error e) {
             e.printStackTrace();
             return;
         }
 //        getAllData();
 
-        deleteRowUsingEmail("mbuso@test.com");
+//        deleteRowUsingEmail("mbuso@test.com");
     }
 
     public static Connection getConnection() {
@@ -74,7 +74,6 @@ public class DataBaseHander {
             ResultSet resultSet = statement.executeQuery(query);
             ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
             int columnsNumber = resultSetMetaData.getColumnCount();
-            System.out.println(columnsNumber);
             while (resultSet.next()) {
                 for(int i = 1; i <= columnsNumber; i++) {
                     System.out.println(resultSet.getString(i) + " ");
@@ -108,7 +107,7 @@ public class DataBaseHander {
     public static Connection connectionToDB(String url) {
         Connection connection = null;
         try {
-            // /home/mbuso/Debt_Master/DebtMasterServer/DebtMaster.db
+            // /home/mbuso/Debt_Master/DebtMasterServer/
             connection = DriverManager.getConnection(url);
             System.out.println("connected");
         } catch (SQLException e) {
@@ -141,7 +140,6 @@ public class DataBaseHander {
         prepState.setObject(3, convertedJson.get("budget"));
 
         prepState.executeUpdate();
-
     }
 
     /**
