@@ -1,26 +1,29 @@
-package za.co.debtmaster.app.user;
+package za.co.debtmaster.db;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.sqlite.SQLiteException;
 
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DataBaseHander {
+public class DataBaseHandler {
 
     private static Connection connection;
+    private static String jsonString;
 
-
-
-    public DataBaseHander() {
+    public DataBaseHandler() throws SQLException {
         String url = "jdbc:sqlite:DebtMaster.db";
         this.connection = connectionToDB(url);
+        createDataBase();
+        this.jsonString = jsonString;
     }
 
+
     public static void main(String[] args) throws SQLException {
-        DataBaseHander dataBaseHander = new DataBaseHander();
+        DataBaseHandler dataBaseHandler = new DataBaseHandler();
 //        dataBaseHander.disconnect();
-        System.out.println(connection.isClosed());
+//        System.out.println(connection.isClosed());
         String personJsonString = "{\"name\":\"mbuso\"," +
                 "\"email\":\"mbuso456@test.com\"," +
                 "\"budget\":{\"income\":\"15000.00\"," +
@@ -44,11 +47,11 @@ public class DataBaseHander {
                 "}";
         System.out.println(personJsonString);
 
-//        deleteAll();
+        dataBaseHandler.deleteAll();
 //        getAllData();
         try {
-            dataBaseHander.addPerson(personJsonString);
-            dataBaseHander.addPerson(personJsonString2);
+            dataBaseHandler.addPerson(personJsonString);
+//            dataBaseHandler.addPerson(personJsonString2);
         }catch (Error e) {
             e.printStackTrace();
             return;
@@ -58,7 +61,38 @@ public class DataBaseHander {
 //        deleteRowUsingEmail("mbuso@test.com");
     }
 
-    public static Connection getConnection() {
+    public Connection connectionToDB(String url) throws SQLException {
+        Connection connection = null;
+        try {
+            // /home/mbuso/Debt_Master/DebtMasterServer/
+            connection = DriverManager.getConnection(url);
+            System.out.println("connected");
+        } catch (SQLException e) {
+            throw new Error("Problem", e);
+        }
+
+        return connection;
+    }
+
+    private void createDataBase() throws SQLException {
+        Statement statement = null;
+        String sql =    "CREATE TABLE \"person\" (" +
+                            "\"id\" INTEGER," +
+                            "\"name\" TEXT," +
+                            "\"email\" TEXT," +
+                            "\"budget\" BLOB," +
+                            "PRIMARY KEY(\"id\" AUTOINCREMENT)" +
+                        ");";
+
+        try {
+            PreparedStatement prepState = connection.prepareStatement(sql);
+            prepState.executeUpdate();
+        } catch (SQLiteException e) {
+            System.out.println("person table already exists");
+        }
+    }
+
+    public Connection getConnection() {
         return connection;
     }
 
@@ -66,7 +100,7 @@ public class DataBaseHander {
      * gets all the info in the database
      * @return sqlite object or Nothing
      */
-    private static String getAllData() {
+    private String getAllData() {
         Statement statement = null;
         String query = "select * from person";
         try {
@@ -88,7 +122,7 @@ public class DataBaseHander {
         return "Nothing";
     }
 
-    public static String getDataByEmail(String email) {
+    public String getDataByEmail(String email) {
         String jsonResult = "";
         Statement statement = null;
         String query = "select * from person where email=\"" + email +"\"";
@@ -101,19 +135,6 @@ public class DataBaseHander {
         }
 
         return jsonResult;
-    }
-
-
-    public static Connection connectionToDB(String url) {
-        Connection connection = null;
-        try {
-            // /home/mbuso/Debt_Master/DebtMasterServer/
-            connection = DriverManager.getConnection(url);
-            System.out.println("connected");
-        } catch (SQLException e) {
-            throw new Error("Problem", e);
-        }
-        return connection;
     }
 
     /**
@@ -192,7 +213,7 @@ public class DataBaseHander {
      * Deletes everything in the database
      * @throws SQLException
      */
-    public static void deleteAll() throws SQLException {
+    public void deleteAll() throws SQLException {
 
         String sql = "delete from person;";
         String sql2 = "delete from sqlite_sequence;";
@@ -209,7 +230,7 @@ public class DataBaseHander {
      * @param email
      * @throws SQLException
      */
-    public static void deleteRowUsingEmail(String email) throws SQLException {
+    public void deleteRowUsingEmail(String email) throws SQLException {
         String sql = "delete from person where email=\""+ email +"\";";
         System.out.println(sql);
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
