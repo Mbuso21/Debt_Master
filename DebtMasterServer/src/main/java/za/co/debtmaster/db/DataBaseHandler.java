@@ -16,7 +16,6 @@ public class DataBaseHandler {
         String url = "jdbc:sqlite:DebtMaster.db";
         this.connection = connectionToDB(url);
         createDataBase();
-        this.jsonString = jsonString;
     }
 
 
@@ -45,23 +44,25 @@ public class DataBaseHandler {
                 "}" +
                 "}" +
                 "}";
-        System.out.println(personJsonString);
+//        System.out.println(personJsonString);
 
-        dataBaseHandler.deleteAll();
+//        dataBaseHandler.deleteAll();
 //        getAllData();
         try {
-            dataBaseHandler.addPerson(personJsonString);
+//            dataBaseHandler.addPerson(personJsonString);
 //            dataBaseHandler.addPerson(personJsonString2);
         }catch (Error e) {
             e.printStackTrace();
             return;
         }
+        System.out.println(dataBaseHandler.getDataByEmail("mbuso456@test.com"));
+        dataBaseHandler.updateUserNameByEmail("mbuso@test.com", "nombuso");
 //        getAllData();
 
 //        deleteRowUsingEmail("mbuso@test.com");
     }
 
-    public Connection connectionToDB(String url) throws SQLException {
+    public Connection connectionToDB(String url) {
         Connection connection = null;
         try {
             // /home/mbuso/Debt_Master/DebtMasterServer/
@@ -75,7 +76,6 @@ public class DataBaseHandler {
     }
 
     private void createDataBase() throws SQLException {
-        Statement statement = null;
         String sql =    "CREATE TABLE \"person\" (" +
                             "\"id\" INTEGER," +
                             "\"name\" TEXT," +
@@ -122,19 +122,46 @@ public class DataBaseHandler {
         return "Nothing";
     }
 
+    /**
+     * Retrieves data from DebtMaster.db row based on email
+     * @param email String
+     * @return json String of the row elements else throws an Error data not found
+     */
     public String getDataByEmail(String email) {
         String jsonResult = "";
         Statement statement = null;
-        String query = "select * from person where email=\"" + email +"\"";
-        
-
+        String query = "select * from person where email=\"" + email + "\"";
+        String name = null;
+        Object budgetObject = null;
         try {
-
-        }catch (Exception e) {
-
+            statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+            name = resultSet.getString("name");
+            budgetObject = resultSet.getString("budget");
+        } catch (Exception e) {
+            new Error("data not found");
+            return "Data not found";
         }
+        System.out.println(name);
+        System.out.println(budgetObject);
+        jsonResult = "{\"name\":\"" + name + "\"," +
+                        "\"email\":\"" + email + "\"," +
+                        "\"budget\":" + budgetObject + "\"";
+
 
         return jsonResult;
+    }
+
+    /**
+     * Update the data base with a new name.
+     * @param email
+     * @param name
+     */
+    public void updateUserNameByEmail(String email, String name) throws SQLException {
+        String query = "UPDATE person set name = \"" + name + "\" WHERE email = \"" + email + "\";";
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.executeUpdate();
+
     }
 
     /**
