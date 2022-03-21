@@ -56,7 +56,9 @@ public class DataBaseHandler {
             return;
         }
         System.out.println(dataBaseHandler.getDataByEmail("mbuso456@test.com"));
-        dataBaseHandler.updateUserNameByEmail("mbuso@test.com", "nombuso");
+//        dataBaseHandler.updateUserNameByEmail("mbuso@test.com", "nombuso");
+//        System.out.println(dataBaseHandler.getDataByEmail("mbuso456@test.com"));
+        System.out.println(dataBaseHandler.checkEmailIsRegistered("mbuso@test.com"));
 //        getAllData();
 
 //        deleteRowUsingEmail("mbuso@test.com");
@@ -90,10 +92,6 @@ public class DataBaseHandler {
         } catch (SQLiteException e) {
             System.out.println("person table already exists");
         }
-    }
-
-    public Connection getConnection() {
-        return connection;
     }
 
     /**
@@ -131,8 +129,8 @@ public class DataBaseHandler {
         String jsonResult = "";
         Statement statement = null;
         String query = "select * from person where email=\"" + email + "\"";
-        String name = null;
-        Object budgetObject = null;
+        String name;
+        Object budgetObject;
         try {
             statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
@@ -142,8 +140,6 @@ public class DataBaseHandler {
             new Error("data not found");
             return "Data not found";
         }
-        System.out.println(name);
-        System.out.println(budgetObject);
         jsonResult = "{\"name\":\"" + name + "\"," +
                         "\"email\":\"" + email + "\"," +
                         "\"budget\":" + budgetObject + "\"";
@@ -158,15 +154,33 @@ public class DataBaseHandler {
      * @param name
      */
     public void updateUserNameByEmail(String email, String name) throws SQLException {
+        if(checkEmailIsRegistered(email)) {
+            throw new Error("Email does not exist");
+        }
         String query = "UPDATE person set name = \"" + name + "\" WHERE email = \"" + email + "\";";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.executeUpdate();
 
     }
 
+    public boolean checkEmailIsRegistered(String email) {
+        System.out.println(email);
+        Statement statement = null;
+        String query = "SELECT * from person WHERE email = \"" + email +"\";";
+        try {
+            statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+            resultSet.getString("id");
+            return true;
+        }catch (SQLException e) {
+            return false;
+        }
+    }
+
     /**
      * This will add person data to the DebtMaster.db
      * @param personJsonString
+     * @throws SQLException
      */
     private void addPerson(String personJsonString) throws SQLException {
         // We need to get the info from the
