@@ -61,19 +61,21 @@ public class DebtServer {
 
     private static void setupRoutes(Javalin server) {
         server.routes(() -> {
-            loginAndLogoutRoutes();
-            homePageRoute();
+//            loginAndLogoutRoutes();
             registerRoute();
+//            homePageRoute();
+//            registerRoute();
             calculateDebt();
         });
     }
 
     private static void calculateDebt() {
-        post(CalculatorController.PATH, CalculatorController::handleCalculations);
+        path(CalculatorController.PATH, () -> get(CalculatorController::renderCalculator));
     }
 
     private static void registerRoute() {
-        post(RegisterController.REG_PATH, RegisterController::handleRegister);
+        path(RegisterController.REG_ROUTE, () -> get(RegisterController::renderRegister));
+        post(RegisterController.REG_PATH, RegisterController::registerNewUser);
     }
 
     private static void loginAndLogoutRoutes() {
@@ -91,8 +93,8 @@ public class DebtServer {
     private static Javalin createAndConfigureServer() {
         return Javalin.create(config -> {
             config.addStaticFiles(STATIC_DIR, Location.CLASSPATH);
-            config.sessionHandler(Sessions::nopersistSessionHandler);
-            config.accessManager(new DefaultAccessManager());
+//            config.sessionHandler(Sessions::nopersistSessionHandler);
+//            config.accessManager(new DefaultAccessManager());
         });
     }
 
