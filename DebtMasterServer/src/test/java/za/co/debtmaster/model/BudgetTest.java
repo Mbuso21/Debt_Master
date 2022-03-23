@@ -13,6 +13,8 @@ class BudgetTest {
             "\"transport\":\"2000.00\"" +
             "}}");
 
+    public Budget budget2 = new Budget();
+
     @Test
     void testGetGrossIncome() {
         assertEquals(15000.00, budget.getGrossIncome());
@@ -36,6 +38,36 @@ class BudgetTest {
                 "\"groceries\":\"2000.00\"," +
                 "\"transport\":\"2000.00\"" +
                 "}}", budget.toString());
+    }
+    @Test
+    void testNoBudget() {
+        assertEquals("{\"income\":\"0\"," +
+                "\"expenses\":" +
+                "{}}", budget2.toString());
+    }
+
+    @Test
+    void testUpdateBudget() {
+        // Test no budget
+        assertEquals("{\"income\":\"0\"," +
+                "\"expenses\":" +
+                "{}}", budget2.toString());
+
+        // Update the budget
+        budget2.updateBudget("{\"income\":\"15000.00\"," +
+                "\"expenses\":" +
+                "{\"rent\":\"3000.00\"," +
+                "\"groceries\":\"2000.00\"," +
+                "\"transport\":\"2000.00\"" +
+                "}}");
+
+        // Test updated Budget
+        assertEquals("{\"income\":\"15000.00\"," +
+                "\"expenses\":" +
+                "{\"rent\":\"3000.00\"," +
+                "\"groceries\":\"2000.00\"," +
+                "\"transport\":\"2000.00\"" +
+                "}}", budget2.toString());
     }
 
 }

@@ -23,7 +23,7 @@ public class Budget {
     public Budget() {
         this.totalIncome = 0.00;
         this.totalExpenses = 0.00;
-        this.budgetJSONString = "No Budget";
+        this.budgetJSONString = "{\"income\":\"0\",\"expenses\":{}}";
 
     }
 
@@ -79,5 +79,7 @@ public class Budget {
     }
 
 
-
+    public void updateBudget(String updatedBudget) {
+        this.budgetJSONString = updatedBudget;
+    }
 }

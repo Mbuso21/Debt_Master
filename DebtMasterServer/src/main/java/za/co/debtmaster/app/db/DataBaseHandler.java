@@ -17,6 +17,18 @@ public class DataBaseHandler {
         createDataBase();
     }
 
+    public static void main(String[] args) {
+        DataBaseHandler dataBaseHandler = null;
+        try {
+            dataBaseHandler = new DataBaseHandler();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        Boolean data = dataBaseHandler.checkEmailIsRegistered("mbuso@gmail.com");
+        System.out.println(data);
+    }
+
 
     public Connection connectionToDB(String url) {
         Connection connection = null;
@@ -120,6 +132,19 @@ public class DataBaseHandler {
 
     }
 
+    public void updateUserBudgetByEmail(String email, String budgetJsonString) {
+        if(checkEmailIsRegistered(email)) {
+            throw new Error("Email does not exist");
+        }
+
+
+    }
+
+    /**
+     * Checks if the email is Registered
+     * @param email
+     * @return True if email is registered else false
+     */
     public boolean checkEmailIsRegistered(String email) {
         System.out.println(email);
         Statement statement = null;
