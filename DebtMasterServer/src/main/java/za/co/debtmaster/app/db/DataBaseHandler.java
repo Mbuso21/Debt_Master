@@ -17,16 +17,12 @@ public class DataBaseHandler {
         createDataBase();
     }
 
-    public static void main(String[] args) {
-        DataBaseHandler dataBaseHandler = null;
-        try {
-            dataBaseHandler = new DataBaseHandler();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public static void main(String[] args) throws SQLException {
+        DataBaseHandler dataBaseHandler = new DataBaseHandler();
 
-        Boolean data = dataBaseHandler.checkEmailIsRegistered("mbuso@gmail.com");
+        Boolean data = dataBaseHandler.checkEmailIsRegistered("mbuso456@test.com");
         System.out.println(data);
+        dataBaseHandler.updateUserNameByEmail("mbuso456@test.com", "mbuso");
     }
 
 
@@ -123,7 +119,7 @@ public class DataBaseHandler {
      * @param name the new name for the account
      */
     public void updateUserNameByEmail(String email, String name) throws SQLException {
-        if(checkEmailIsRegistered(email)) {
+        if(!checkEmailIsRegistered(email)) {
             throw new Error("Email does not exist");
         }
         String query = "UPDATE person set name = \"" + name + "\" WHERE email = \"" + email + "\";";
@@ -132,12 +128,19 @@ public class DataBaseHandler {
 
     }
 
-    public void updateUserBudgetByEmail(String email, String budgetJsonString) {
+    /**
+     * Updates budget on
+     * @param email
+     * @param budgetJsonString
+     * @throws SQLException
+     */
+    public void updateUserBudgetByEmail(String email, String budgetJsonString) throws SQLException {
         if(checkEmailIsRegistered(email)) {
             throw new Error("Email does not exist");
         }
-
-
+        String query = "UPDATE person set budget = \"" + budgetJsonString + "\" WHERE email = \"" + email + "\";";
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.executeUpdate();
     }
 
     /**

@@ -73,13 +73,14 @@ public class Budget {
         return requestMap;
     }
 
-    @Override
-    public String toString() {
-        return this.budgetJSONString;
+    public void updateBudget(String updatedBudget) {
+        this.budgetJSONString = updatedBudget;
     }
 
 
-    public void updateBudget(String updatedBudget) {
-        this.budgetJSONString = updatedBudget;
+
+    @Override
+    public String toString() {
+        return this.budgetJSONString;
     }
 }
