@@ -31,7 +31,10 @@ class PersonTest {
     void testToStringNoBudget() {
         Budget budget = new Budget();
         Person person = new Person("Mbuso", "mbuso@test.com", budget);
-        assertEquals("{\"name\":\"Mbuso\",\"email\":\"mbuso@test.com\",\"budget\":\"No Budget\"}", person.toString());
+        assertEquals("{\"name\":\"Mbuso\"," +
+                                "\"email\":\"mbuso@test.com\"," +
+                                "\"budget\":" +
+                                        "\"{\"income\":\"0\",\"expenses\":{}}\"}", person.toString());
     }
 
     @Test
