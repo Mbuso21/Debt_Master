@@ -1,4 +1,5 @@
 FROM ubuntu:21.04
+MAINTAINER mmehloma@student.wethinkcode.co.za
 
 RUN apt-get update
 RUN apt-get install -y openjdk-17-jre curl

@@ -38,4 +38,4 @@ jobs:
  
       
     - name: Build with Maven
-      run: mvn -B package --file DebtMasterServer/pom.xml
+      run: mvn -B --update-snapshots package  --file DebtMasterServer/pom.xml
