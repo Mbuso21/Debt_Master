@@ -87,8 +87,7 @@ public class DebtServer {
     private static void homePageRoute() {
         path(HomePageController.PATH, () -> get(HomePageController::renderHomePage));
     }
-
-    // hello
+    
 
     @NotNull
     private static Javalin createAndConfigureServer() {
