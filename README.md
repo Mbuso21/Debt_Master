@@ -1,2 +1,7 @@
 # Debt Master
-Debt Master is my showcase project to show what I've learnt over my two years at WeThinkCode_
+
+Before you take debt, you need to analyse if you can afford it!!!!
+
+Debt Master is a tool with a web UI to help people manage thier finances.
+
+You can budget, calculate and register your finances.
