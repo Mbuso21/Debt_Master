@@ -23,7 +23,18 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
+        
+    - name: compile the source code of the project
+      run: mvn compile --file DebtMasterServer/pom.xml
       
+    - name: test the compiled source code using a suitable unit testing framework.
+      run: mvn test --file DebtMasterServer/pom.xml
+      
+    - name: validate the project
+      run: mvn package --file DebtMasterServer/pom.xml
+      
+    - name: run any checks on results of integration tests.
+      run: mvn verify --file DebtMasterServer/pom.xml
  
       
     - name: Build with Maven
