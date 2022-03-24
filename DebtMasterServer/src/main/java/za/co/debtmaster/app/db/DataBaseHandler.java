@@ -2,6 +2,9 @@ package za.co.debtmaster.app.db;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.sqlite.SQLiteException;
+import za.co.debtmaster.model.Budget;
+import za.co.debtmaster.model.Person;
+
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,12 +20,20 @@ public class DataBaseHandler {
         createDataBase();
     }
 
+
     public static void main(String[] args) throws SQLException {
         DataBaseHandler dataBaseHandler = new DataBaseHandler();
+        Person person = new Person("Mbuso", "mbuso@test.com", new Budget());
+        try{
+            dataBaseHandler.addPerson(person);
+        }catch (Error e) {
+
+        }
 
         Boolean data = dataBaseHandler.checkEmailIsRegistered("mbuso456@test.com");
         System.out.println(data);
         dataBaseHandler.updateUserNameByEmail("mbuso456@test.com", "mbuso");
+//        dataBaseHandler.deleteRowUsingEmail(person.getEmail());
     }
 
 
@@ -164,27 +175,27 @@ public class DataBaseHandler {
 
     /**
      * This will add person data to the DebtMaster.db
-     * @param personJsonString
+     * @param person object
      * @throws SQLException
      */
-    private void addPerson(String personJsonString) throws SQLException {
+    public void addPerson(Person person) throws SQLException {
         // We need to get the info from the
-        HashMap<String, String> convertedJson = convertStringToJason(personJsonString);
-        System.out.println(convertedJson);
+//        HashMap<String, String> convertedJson = convertStringToJason(personJsonString);
+//        System.out.println(convertedJson);
 
         // Duplicate email cannot register
-        System.out.println(duplicateEmailCheck(convertedJson.get("email")));
-        if(duplicateEmailCheck(convertedJson.get("email"))) {
-            System.out.println("email:" + convertedJson.get("email") + " already exists");
-            throw new Error("Email already taken");
+        System.out.println(duplicateEmailCheck(person.getEmail()));
+        if(duplicateEmailCheck(person.getEmail())) {
+            System.out.println("email:" + person.getEmail() + " already exists");
+            throw new Error("email:" + person.getEmail() + " already exists");
         }
 
         // now we add the info to the database
         String sql = "insert into person (name, email, budget) values (?, ?, ?);";
         PreparedStatement prepState  = connection.prepareStatement(sql);
-        prepState.setString(1, convertedJson.get("name"));
-        prepState.setString(2, convertedJson.get("email"));
-        prepState.setObject(3, convertedJson.get("budget"));
+        prepState.setString(1, person.getName());
+        prepState.setString(2, person.getEmail());
+        prepState.setObject(3, person.getBudget());
 
         prepState.executeUpdate();
     }

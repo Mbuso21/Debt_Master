@@ -8,8 +8,12 @@ public class LoginController {
     public static final String ROOT_PATH = "/index.html";
 
     public static void handleLogin(Context context) {
+
     }
 
     public static void handleLogout(Context context) {
+    }
+
+    public static void renderLogin(Context context) {
     }
 }
