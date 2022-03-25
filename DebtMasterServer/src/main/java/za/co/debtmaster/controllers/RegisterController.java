@@ -19,16 +19,19 @@ public class RegisterController {
         DataBaseHandler dataBaseHandler = new DataBaseHandler();
         Person person = new Person(context.formParam("name"), context.formParam("email"), new Budget());
 
-        System.out.println(person.toString());
+        System.out.println(person);
         try {
             dataBaseHandler.addPerson(person);
+            context.sessionAttribute("user", person);
         } catch (Error e) {
             // Render on page that user already exists
-            context.result("Registered");
+            context.render("registered-already.html");
         }
 
 
-//        context.render("index.html");
+
+
+//        context.render("home.html");
 
 
     }

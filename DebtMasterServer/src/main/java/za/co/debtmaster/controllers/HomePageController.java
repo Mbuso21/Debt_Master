@@ -6,5 +6,6 @@ public class HomePageController {
     public static final String PATH = "/home";
 
     public static void renderHomePage(Context context) {
+
     }
 }

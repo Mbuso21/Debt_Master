@@ -63,7 +63,7 @@ public class DebtServer {
         server.routes(() -> {
             loginAndLogoutRoutes();
             registerRoute();
-//            homePageRoute();
+            homePageRoute();
 //            registerRoute();
             calculateDebt();
         });

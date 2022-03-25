@@ -21,20 +21,20 @@ public class DataBaseHandler {
     }
 
 
-    public static void main(String[] args) throws SQLException {
-        DataBaseHandler dataBaseHandler = new DataBaseHandler();
-        Person person = new Person("Mbuso", "mbuso@test.com", new Budget());
-        try{
-            dataBaseHandler.addPerson(person);
-        }catch (Error e) {
-
-        }
-
-        Boolean data = dataBaseHandler.checkEmailIsRegistered("mbuso456@test.com");
-        System.out.println(data);
-        dataBaseHandler.updateUserNameByEmail("mbuso456@test.com", "mbuso");
-//        dataBaseHandler.deleteRowUsingEmail(person.getEmail());
-    }
+//    public static void main(String[] args) throws SQLException {
+//        DataBaseHandler dataBaseHandler = new DataBaseHandler();
+//        Person person = new Person("Mbuso", "mbuso@test.com", new Budget());
+//        try{
+//            dataBaseHandler.addPerson(person);
+//        }catch (Error e) {
+//
+//        }
+//
+//        Boolean data = dataBaseHandler.checkEmailIsRegistered("mbuso456@test.com");
+//        System.out.println(data);
+//        dataBaseHandler.updateUserNameByEmail("mbuso456@test.com", "mbuso");
+////        dataBaseHandler.deleteRowUsingEmail(person.getEmail());
+//    }
 
 
     public Connection connectionToDB(String url) {
@@ -179,12 +179,9 @@ public class DataBaseHandler {
      * @throws SQLException
      */
     public void addPerson(Person person) throws SQLException {
-        // We need to get the info from the
-//        HashMap<String, String> convertedJson = convertStringToJason(personJsonString);
-//        System.out.println(convertedJson);
 
         // Duplicate email cannot register
-        System.out.println(duplicateEmailCheck(person.getEmail()));
+        System.out.println("Does this email exist? " + duplicateEmailCheck(person.getEmail()));
         if(duplicateEmailCheck(person.getEmail())) {
             System.out.println("email:" + person.getEmail() + " already exists");
             throw new Error("email:" + person.getEmail() + " already exists");
@@ -211,7 +208,6 @@ public class DataBaseHandler {
             statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("select * from person");
             while (resultSet.next()) {
-                System.out.println(resultSet.getString("email"));
                 if(email.equals(resultSet.getString("email"))){
                     return true;
                 }
