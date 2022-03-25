@@ -237,7 +237,7 @@ public class DataBaseHandler {
         return personMap;
     }
 
-    private void disconnect() throws SQLException {
+    public void disconnect() throws SQLException {
         connection.close();
         System.out.println(connection.isClosed());
     }

@@ -25,14 +25,16 @@ public class RegisterController {
             context.sessionAttribute("user", person);
         } catch (Error e) {
             // Render on page that user already exists
+            dataBaseHandler.disconnect();
             context.render("registered-already.html");
+
         }
 
 
 
 
 //        context.render("home.html");
-
+        dataBaseHandler.disconnect();
 
     }
 
