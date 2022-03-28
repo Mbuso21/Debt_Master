@@ -27,6 +27,8 @@ class RegisterControllerTest {
         assertFalse(RegisterController.isValid("mbusotest..com"));
         assertFalse(RegisterController.isValid("mbuso!!test..com"));
         assertFalse(RegisterController.isValid("mbuso@test.com?"));
+        assertFalse(RegisterController.isValid("mbuso"));
+        assertFalse(RegisterController.isValid("ghvhtch hjvvyjfuyv"));
 
     }
 }
