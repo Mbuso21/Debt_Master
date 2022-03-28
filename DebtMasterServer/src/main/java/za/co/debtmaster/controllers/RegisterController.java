@@ -4,8 +4,8 @@ import io.javalin.http.Context;
 import za.co.debtmaster.app.db.DataBaseHandler;
 import za.co.debtmaster.model.Budget;
 import za.co.debtmaster.model.Person;
-
 import java.sql.SQLException;
+import java.util.regex.Pattern;
 
 public class RegisterController {
     public static final String REG_PATH = "/register";
@@ -16,6 +16,12 @@ public class RegisterController {
         System.out.println("In registerNewUser");
         System.out.println(context.formParam("name"));
         System.out.println(context.formParam("email"));
+
+        // Check to see if the email is fine
+        if(isValid(context.formParam("email")) || context.formParam("name").isEmpty()) {
+            context.render("registered-already.html");
+        }
+
         DataBaseHandler dataBaseHandler = new DataBaseHandler();
         Person person = new Person(context.formParam("name"), context.formParam("email"), new Budget());
 
@@ -42,5 +48,20 @@ public class RegisterController {
         context.render("register.html");
 
     }
+
+    public static boolean isValid(String email)
+    {
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."+
+                "[a-zA-Z0-9_+&*-]+)*@" +
+                "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
+                "A-Z]{2,7}$";
+
+        Pattern pat = Pattern.compile(emailRegex);
+        if (email == null)
+            return false;
+        return pat.matcher(email).matches();
+    }
+
+
 
 }
