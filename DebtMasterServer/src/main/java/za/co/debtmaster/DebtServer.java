@@ -80,8 +80,6 @@ public class DebtServer {
 
     private static void loginAndLogoutRoutes() {
         path(LoginController.LOGIN_PATH, () -> get(LoginController::renderLogin));
-        post(LoginController.LOGIN_PATH, LoginController::handleLogin);
-        get(LoginController.LOGOUT_PATH, LoginController::handleLogout);
     }
 
     private static void homePageRoute() {
