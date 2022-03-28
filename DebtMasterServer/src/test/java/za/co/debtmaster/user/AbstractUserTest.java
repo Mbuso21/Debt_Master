@@ -103,6 +103,38 @@ public abstract class AbstractUserTest {
     }
 
     /**
+     *
+     * @param name name of user
+     * @param email email must be a correct email otherwise will render to somewhere else
+     */
+    protected void doRegisterCorrect(String name, String email) {
+        navigateTo("/register_form");
+
+        driver.findElement(By.id("name")).sendKeys(name);
+        driver.findElement(By.id("email")).sendKeys(email);
+        driver.findElement(By.id("submit")).click();
+
+        assertThat(driver.getCurrentUrl()).isEqualToIgnoringCase(appUrl("/register"));
+
+    }
+
+    /**
+     *
+     * @param name name of user
+     * @param email email must be a correct email otherwise will render to somewhere else
+     */
+    protected void doRegisterIncorrect(String name, String email) {
+        navigateTo("/register_form");
+
+        driver.findElement(By.id("name")).sendKeys(name);
+        driver.findElement(By.id("email")).sendKeys(email);
+        driver.findElement(By.id("submit")).click();
+
+        assertThat(driver.getCurrentUrl()).isEqualToIgnoringCase(appUrl("/register"));
+
+    }
+
+    /**
      * Submit a form that has a button with id of 'submit'
      */
     protected void submitForm() {

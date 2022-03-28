@@ -18,8 +18,9 @@ public class RegisterController {
         System.out.println(context.formParam("email"));
 
         // Check to see if the email is fine
-        if(isValid(context.formParam("email")) || context.formParam("name").isEmpty()) {
+        if(isValid(context.formParam("email")) || context.formParam("name").isBlank()) {
             context.render("registered-already.html");
+            return;
         }
 
         DataBaseHandler dataBaseHandler = new DataBaseHandler();
@@ -36,10 +37,6 @@ public class RegisterController {
 
         }
 
-
-
-
-//        context.render("home.html");
         dataBaseHandler.disconnect();
 
     }
