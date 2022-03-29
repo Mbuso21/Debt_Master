@@ -114,7 +114,7 @@ public abstract class AbstractUserTest {
         driver.findElement(By.id("email")).sendKeys(email);
         driver.findElement(By.id("submit")).click();
 
-        assertThat(driver.getCurrentUrl()).isEqualToIgnoringCase(appUrl("/register"));
+        assertThat(driver.getCurrentUrl()).isEqualToIgnoringCase(appUrl("/register_form"));
 
     }
 
@@ -130,7 +130,7 @@ public abstract class AbstractUserTest {
         driver.findElement(By.id("email")).sendKeys(email);
         driver.findElement(By.id("submit")).click();
 
-        assertThat(driver.getCurrentUrl()).isEqualToIgnoringCase(appUrl("/register"));
+        assertThat(driver.getCurrentUrl()).isEqualToIgnoringCase(appUrl("/register_form"));
 
     }
 
