@@ -64,18 +64,20 @@ public class DebtServer {
             loginAndLogoutRoutes();
             registerRoute();
             homePageRoute();
-//            registerRoute();
             calculateDebt();
         });
     }
 
     private static void calculateDebt() {
         path(CalculatorController.PATH, () -> get(CalculatorController::renderCalculator));
+        path(CalculatorController.PATH_VEHICLE, () -> get(CalculatorController::renderVehicle));
+        post(CalculatorController.PATH_VEHICLE_POST, CalculatorController::calculateVehicle);
     }
 
     private static void registerRoute() {
         path(RegisterController.REG_ROUTE, () -> get(RegisterController::renderRegister));
         post(RegisterController.REG_PATH, RegisterController::registerNewUser);
+
     }
 
     private static void loginAndLogoutRoutes() {
